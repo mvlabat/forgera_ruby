@@ -1,0 +1,8 @@
+<h1>Mods#test</h1>
+<% @mods.each do |mod| %>
+  <div class="mod-row">
+    <span class="mod-row-label">Name:</span> <span class="mod-row-value"><%= mod.name %></span>
+    <span class="mod-row-label">Version:</span> <span class="mod-row-value"><%= mod.version %></span>
+    <span class="mod-row-label">Project URL:</span> <span class="mod-row-value"><%= mod.project_url %></span>
+  </div>
+<% end %>
