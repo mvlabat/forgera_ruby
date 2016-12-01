@@ -4,4 +4,10 @@ class Mod < ApplicationRecord
   def self.minecraft_version
     MINECRAFT_VERSION
   end
+
+  def merge(mod)
+    self.name = mod.name
+    self.version = mod.version
+    self
+  end
 end
