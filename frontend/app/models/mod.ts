@@ -3,4 +3,6 @@ export class Mod {
   name: string;
   version: string;
   project_url: string;
+  created_at: string;
+  updated_at: string;
 }

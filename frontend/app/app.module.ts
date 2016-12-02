@@ -1,11 +1,13 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
-import {AppRoutingModule} from './app-routing.module'
+import { AppRoutingModule } from './app-routing.module'
 
-import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
+import { AppComponent } from "./components/app.component";
+import { ModsComponent } from "./components/mods.component";
+import { ModService } from "./services/mod.service";
 
 @NgModule({
   imports: [
@@ -15,7 +17,11 @@ import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
     HttpModule,
   ],
   declarations: [
+    AppComponent,
+    ModsComponent,
   ],
-  bootstrap: [AppComponent]
+  providers: [ModService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+}
