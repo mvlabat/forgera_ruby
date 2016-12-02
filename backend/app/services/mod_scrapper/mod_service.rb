@@ -7,7 +7,7 @@ class ModService
     mod.save
     Concurrent::Maybe.just(mod)
   rescue StandardError => e
-    puts "#{e.class}: #{e.message}"
+    Rails.logger.info "#{e.class}: #{e.message}"
     Concurrent::Maybe.nothing(e)
   end
 
@@ -16,7 +16,7 @@ class ModService
       scrapper = ScrapperFactory.get_scrapper(project_url)
       Concurrent::Maybe.just(scrapper.scrap(project_url))
     rescue StandardError => e
-      puts "#{e.class}: #{e.message}"
+      Rails.logger.info "#{e.class}: #{e.message}"
       Concurrent::Maybe.nothing(e)
     end
 
