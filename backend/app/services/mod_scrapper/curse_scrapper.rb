@@ -7,7 +7,11 @@ class CurseScrapper
     mod = Mod.new(project_url: url)
 
     mechanize = Mechanize.new
-    page = mechanize.get(url + (url[-1] == '/' ? 'files' : '/files'))
+    begin
+      page = mechanize.get(url + (url[-1] == '/' ? 'files' : '/files'))
+    rescue Mechanize::ResponseCodeError
+      raise_invalid_project_url(url)
+    end
 
     mod_node = get_mod_node(page)
     mod.name = get_mod_name(page)
@@ -20,12 +24,12 @@ class CurseScrapper
   def get_mod_node(page)
     node_set = page.css('.listing-project-file tr.project-file-list-item')
     if node_set.empty?
-      raise_invalid_html
+      raise_invalid_html(url)
     end
     node_set.each do |subnode|
       return subnode if has_version(subnode, Mod.minecraft_version)
     end
-    raise_no_mod
+    raise_no_mod(Mod.minecraft_version)
   end
 
   def has_version(node, version)
@@ -43,7 +47,7 @@ class CurseScrapper
   def get_node_content(parent, selector)
     inner_node = parent.at_css(selector)
     if inner_node.nil?
-      raise_invalid_html
+      raise_invalid_html(url)
     end
     inner_node.content
   end
@@ -81,13 +85,5 @@ class CurseScrapper
     else
       version
     end
-  end
-
-  def raise_invalid_html(error = 'Unexpected html structure')
-    raise HtmlParseError.new, error
-  end
-
-  def raise_no_mod(error = 'No mod with such version')
-    raise UnsupportedVersionError.new, error
   end
 end
