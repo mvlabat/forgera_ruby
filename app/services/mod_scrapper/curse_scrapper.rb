@@ -1,8 +1,7 @@
 require 'mechanize'
-require 'concurrent/synchronization'
 
 class CurseScrapper
-  include Concurrent
+  include Scrapper
 
   def scrap(url)
     mod = Mod.new(project_url: url)
@@ -10,51 +9,67 @@ class CurseScrapper
     mechanize = Mechanize.new
     page = mechanize.get(url + (url[-1] == '/' ? 'files' : '/files'))
 
-    node = get_node(page)
-    return Maybe.nothing if node.nothing?
-
+    mod_node = get_mod_node(page)
     mod.name = get_mod_name(page)
-    mod.version = extract_mod_version(mod.name, get_jar_filename(node.just))
-    Maybe.just(mod)
+    mod.version = extract_mod_version(mod.name, get_jar_filename(mod_node))
+    mod
   end
 
   protected
 
-  def get_node(page)
+  def get_mod_node(page)
     node_set = page.css('.listing-project-file tr.project-file-list-item')
-    node_set.each do |subnode|
-      return Maybe.just(subnode) if has_version(subnode, Mod.minecraft_version)
+    if node_set.empty?
+      raise_invalid_html
     end
-    Maybe.nothing
+    node_set.each do |subnode|
+      return subnode if has_version(subnode, Mod.minecraft_version)
+    end
+    raise_no_mod
   end
 
   def has_version(node, version)
-    node.at_css('.version-label').content == version
+    get_node_content(node, '.version-label') == version
   end
 
   def get_jar_filename(node)
-    node.at_css('.project-file-name-container a').content
+    get_node_content(node, '.project-file-name-container a')
   end
 
   def get_mod_name(page)
-    page.at_css('h1.project-title span').content
+    get_node_content(page, 'h1.project-title span')
+  end
+
+  def get_node_content(parent, selector)
+    inner_node = parent.at_css(selector)
+    if inner_node.nil?
+      raise_invalid_html
+    end
+    inner_node.content
   end
 
   def extract_mod_version(modname, filename)
-    start = 0
-    j = 0
-    skipped_name = false
-    filename.split('').each_with_index { |c, i|
-      cm = modname[j]
+    regex_filter = /[A-Za-z0-9]/
 
+    modname_filtered_length = modname.scan(regex_filter).count
+
+    start = 0
+    j = 0 # iterates through filtered modname
+    skipped_name = false
+
+    # We are going to look for the start variable value, which points to the position,
+    # where mod name is skipped and version begins.
+    filename.split('').each_with_index { |c, i|
       if skipped_name
+        # We do not use regex_filter, because version can start with '(', for instance,
+        # but it may be separated with spaces or dashes from the modname.
         if c != ' ' && c != '-'
           start = i
           break
         end
-      elsif !(cm =~ /[A-Za-z0-9]/) || cm.downcase == cm.downcase
+      elsif c =~ regex_filter
         j += 1
-        if j == modname.length
+        if j == modname_filtered_length
           skipped_name = true
         end
       end
@@ -66,5 +81,13 @@ class CurseScrapper
     else
       version
     end
+  end
+
+  def raise_invalid_html(error = 'Unexpected html structure')
+    raise HtmlParseError.new, error
+  end
+
+  def raise_no_mod(error = 'No mod with such version')
+    raise UnsupportedVersionError.new, error
   end
 end
