@@ -10,9 +10,23 @@ RSpec.describe ModsController, type: :controller do
 
   describe 'POST mod' do
     it 'posts a mod' do
-      request.headers['CONTENT_TYPE'] = 'application/json'
-      post :create, params: { "project_url": "https://minecraft.curseforge.com/projects/multiworld" }
+      post_mod("https://minecraft.curseforge.com/projects/multiworld")
       compare_data(response.body, Mod.last)
+    end
+
+    it 'tries to post non-existing mod' do
+      post_mod("https://minecraft.curseforge.com/projects/non-existing")
+      expect(response.body).to match(/Invalid project url '.*'/)
+    end
+
+    it 'tries to post a mod with unsupported version' do
+      post_mod("https://minecraft.curseforge.com/projects/fancy-block-particles")
+      expect(response.body).to match(/No mod with '.*' version/)
+    end
+
+    def post_mod(project_url)
+      request.headers['CONTENT_TYPE'] = 'application/json'
+      post :create, params: { "project_url": project_url }
     end
   end
 
