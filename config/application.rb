@@ -12,5 +12,9 @@ module ForgeraRuby
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '{*/}')]
+    config.api_only = true
+    config.generators do |g|
+      g.test_framework :rspec
+    end
   end
 end

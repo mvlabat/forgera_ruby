@@ -29,12 +29,18 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'mechanize', '~> 2.7'
 
+gem 'rack-cors', '~> 0.4.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'rspec-rails', '~> 3.5'
+
+  gem 'shoulda-matchers', '~> 3.1', require: false
+  gem 'database_cleaner', '~> 1.5'
 end
 
 group :development do
