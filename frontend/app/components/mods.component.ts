@@ -10,6 +10,8 @@ export class ModsComponent implements OnInit {
   title = 'Mods';
   mods: Mod[];
   modUrl = 'https://minecraft.curseforge.com/projects/journeymap-32274';
+  isWaiting = false;
+  errors: string[];
 
   constructor(private modService: ModService) {}
 
@@ -18,14 +20,43 @@ export class ModsComponent implements OnInit {
   }
 
   populateMods(): void {
-    this.modService.getMods().then(mods => this.mods = mods)
+    this.beginAction();
+
+    this.modService.getMods().then(mods => {
+      this.mods = mods;
+      this.isWaiting = false;
+    }).catch(error => this.catchError(error));
   }
 
   addMod(): void {
-    this.modService.addMod(this.modUrl).then(mod => this.mods.push(mod))
+    this.beginAction();
+
+    this.modService.addMod(this.modUrl).then(mod => {
+      this.mods.push(mod);
+      this.isWaiting = false;
+    }).catch(error => this.catchError(error));
   }
 
   updateMods(): void {
-    this.modService.updateMods().then(mods => this.mods = mods)
+    this.beginAction();
+
+    this.modService.updateMods().then(mods => {
+      this.mods = mods;
+      this.isWaiting = false;
+    }).catch(error => this.catchError(error));
+  }
+
+  beginAction(): void {
+    this.isWaiting = true;
+    this.errors = [];
+  }
+
+  catchError(error: any): void {
+    this.errors.push(error);
+    this.isWaiting = false;
+  }
+
+  dismissError(index: number): void {
+    this.errors.splice(index, 1);
   }
 }

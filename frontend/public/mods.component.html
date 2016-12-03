@@ -1,11 +1,17 @@
 <h2>{{title}}</h2>
+<ul *ngIf="errors.length" class="errors">
+    <li *ngFor="let error of errors" class="error">
+        <div (click)="dismissError(index)">X</div>
+        {{error}}
+    </li>
+</ul>
 <table class="mods">
     <form (ngSubmit)="addMod()">
         <input [(ngModel)]="modUrl" [ngModelOptions]="{standalone: true}">
-        <button type="submit" id="add">Add</button>
+        <button [disabled]="isWaiting" type="submit" id="add">Add</button>
     </form>
 
-    <button (click)="updateMods()" id="update">Update</button>
+    <button (click)="updateMods()" [disabled]="isWaiting" id="update">Update</button>
 
     <tr *ngFor="let mod of mods">
         <td class="name">{{mod.name}}</td>

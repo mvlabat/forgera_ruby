@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+import { Http, Response } from "@angular/http";
 import { Mod } from "../models/mod";
 
 import 'rxjs/add/operator/toPromise';
@@ -18,24 +18,28 @@ export class ModService {
     return this.http.get(this.get_url)
       .toPromise()
       .then(response => response.json() as Mod[])
-      .catch(this.handleError);
+      .catch(ModService.handleError);
   }
 
   addMod(project_url: string): Promise<Mod> {
     return this.http.post(this.post_url, {project_url: project_url})
       .toPromise()
       .then(response => response.json() as Mod)
-      .catch(this.handleError);
+      .catch(ModService.handleError);
   }
 
   updateMods(): Promise<Mod[]> {
     return this.http.get(this.update_url)
       .toPromise()
       .then(response => response.json() as Mod[])
-      .catch(this.handleError);
+      .catch(ModService.handleError);
   }
 
-  private handleError(error: any): Promise<any> {
+  private static handleError(error: any): Promise<any> {
+    if (error instanceof Response) {
+      console.error('An error occured', error.text());
+      return Promise.reject(error.text());
+    }
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
