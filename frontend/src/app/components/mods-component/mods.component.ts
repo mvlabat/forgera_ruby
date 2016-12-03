@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { ModService } from "../services/mod.service";
-import { Mod } from "../models/mod";
+import { ModService } from "../../services/mod.service";
+import { Mod } from "../../models/mod";
 
 @Component({
   selector: 'mods',
-  templateUrl: 'public/mods.component.html'
+  // moduleId: module.id,
+  templateUrl: 'mods.component.html',
 })
 export class ModsComponent implements OnInit {
   title = 'Mods';

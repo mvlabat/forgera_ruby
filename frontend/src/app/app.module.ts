@@ -5,8 +5,8 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module'
 
-import { AppComponent } from "./components/app.component";
-import { ModsComponent } from "./components/mods.component";
+import { AppComponent } from "./components/app-component/app.component";
+import { ModsComponent } from "./components/mods-component/mods.component";
 import { ModService } from "./services/mod.service";
 
 @NgModule({
