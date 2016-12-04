@@ -8,7 +8,7 @@ services:
 
 before_script:
   - cd backend
-  - cp config/database.yml.travis config/database.yml
+  - cp config/database.travis.yml config/database.yml
   - bundle exec rake db:setup
 
 script: bundle exec rspec
