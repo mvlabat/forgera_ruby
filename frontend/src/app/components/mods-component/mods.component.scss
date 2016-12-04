@@ -1,0 +1,129 @@
+$color: #ededed;
+
+@mixin font {
+  color: $color;
+  font-family: 'minecraftfont';
+  font-weight: normal;
+  font-size: 18px;
+}
+
+#header, #content {
+  padding: 20px;
+}
+
+#header {
+  background: url(assets/dirt-texture5.png);
+  box-shadow: 0 0 15px 5px #000;
+}
+
+#content {
+  padding-top: 20px;
+  height: 100%;
+}
+
+form {
+  width: 100%;
+
+  overflow: hidden;
+
+  > table {
+    width: 100%;
+    border-spacing: 0 20px;
+
+    td {
+      vertical-align: top;
+    }
+  }
+}
+
+.input-container {
+  input {
+    $padding: 10px;
+    $border: 3px;
+    padding: $padding;
+    width: calc(100% - #{($padding + $border) * 2});
+
+    background: black;
+    border: $border solid #999999;
+
+    @include font;
+  }
+}
+
+.button-container {
+  width: 15%;
+
+  button {
+    $margin: 20px;
+    margin-left: $margin;
+    width: calc(100% - #{$margin});
+
+    padding: 13px 0;
+
+    background: url(assets/button-texture.png);
+    border: 2px solid #000;
+    @include font;
+    color: #e7e7e7;
+    @mixin inner-shadow {
+      box-shadow: inset 2px 0 0 0 rgba(255, 255, 255, 0.5), inset 0 2px 0 0 rgba(255, 255, 255, 0.5), inset -2px 0 0 0 rgba(0, 0, 0, 0.2), inset 0 -4px 0 0 rgba(0, 0, 0, 0.2);
+    }
+    @include inner-shadow;
+
+    &:hover {
+      color: #ffffa0;
+      background: url(assets/button-hover-texture.png);
+      @include inner-shadow;
+    }
+
+    &:disabled {
+      color: #a1a1a1;
+      background: url(assets/button-disabled-texture.png);
+      box-shadow: none;
+    }
+  }
+}
+
+ul.errors {
+  padding: 0;
+  background: url(assets/button-disabled-texture.png);
+  border: 2px solid #000;
+}
+
+li.error {
+  list-style: none;
+
+  div {
+    padding: 20px;
+    display: table-cell;
+    vertical-align: middle;
+
+    &.details {
+      width: 100%;
+    }
+
+    &.close {
+      font-size: 2em;
+      cursor: pointer;
+    }
+  }
+}
+
+table.mods {
+  width: 100%;
+
+  td {
+    padding: 10px 0;
+  }
+}
+
+.name {
+  width: 40%;
+}
+
+.version {
+  width: 40%;
+}
+
+.project-url {
+  width: 20%;
+}

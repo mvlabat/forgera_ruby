@@ -1,21 +1,41 @@
-<h2>{{title}}</h2>
-<ul *ngIf="errors.length" class="errors">
+<div id="header">
+  <h1>{{appName}}</h1>
+  <h2>{{title}}</h2>
+</div>
+
+<div id="content">
+  <form (ngSubmit)="addMod()">
+    <table>
+      <tr class="input-container">
+        <td rowspan="2">
+          <input [(ngModel)]="modUrl" [ngModelOptions]="{standalone: true}">
+        </td>
+        <td class="button-container">
+          <button [disabled]="isWaiting" type="submit" id="add">Add</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="button-container">
+          <button (click)="updateMods()" [disabled]="isWaiting" id="update">Update</button>
+        </td>
+      </tr>
+    </table>
+
+  </form>
+
+  <ul *ngIf="errors.length" class="errors">
     <li *ngFor="let error of errors" class="error">
-        <div (click)="dismissError(index)">X</div>
-        {{error}}
+      <div class="details">{{error}}</div>
+      <div (click)="dismissError(index)" class="close">X</div>
     </li>
-</ul>
-<table class="mods">
-    <form (ngSubmit)="addMod()">
-        <input [(ngModel)]="modUrl" [ngModelOptions]="{standalone: true}">
-        <button [disabled]="isWaiting" type="submit" id="add">Add</button>
-    </form>
+  </ul>
 
-    <button (click)="updateMods()" [disabled]="isWaiting" id="update">Update</button>
-
+  <table class="mods">
     <tr *ngFor="let mod of mods">
-        <td class="name">{{mod.name}}</td>
-        <td class="version">{{mod.version}}</td>
-        <td class="project-url">{{mod.project_url}}</td>
+      <td class="name">{{mod.name}}</td>
+      <td class="version">{{mod.version}}</td>
+      <td class="project-url"><a [href]="mod.project_url">Project page</a></td>
     </tr>
-</table>
+  </table>
+</div>

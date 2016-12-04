@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+$color: #ededed;
+
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'minecraftfont';
+  src: url('assets/minecraft-font.eot');
+  src: local('minecraftfont'), url('assets/minecraft-font.woff') format('woff'), url('assets/minecraft-font.ttf') format('truetype');
+}
+
+body {
+  background: url(assets/4K-minecraft.jpg);
+  background-position-x: center;
+  font-family: 'minecraftfont';
+  font-weight: normal;
+  font-size: 18px;
+  color: $color;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+a {
+  color: $color;
+  text-decoration: underline;
+
+  &:hover, &:active {
+    text-decoration: none;
+  }
+}

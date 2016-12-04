@@ -6,8 +6,10 @@ import { Mod } from "../../models/mod";
   selector: 'mods',
   // moduleId: module.id,
   templateUrl: 'mods.component.html',
+  styleUrls: ['mods.component.scss'],
 })
 export class ModsComponent implements OnInit {
+  appName = "Forgera";
   title = 'Mods';
   mods: Mod[];
   modUrl = 'https://minecraft.curseforge.com/projects/journeymap-32274';
