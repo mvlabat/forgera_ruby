@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Deploying backend
+**Ruby version** the project was developed on: 2.3.3
 
-Things you may want to cover:
+**Database:** PostgreSQL<BR>
+**Login:** forgera_ruby<BR>
+**Password:** forgera_ruby
 
-* Ruby version
+```bash
+cd backend
+bundle install
+rails db:setup
+rails s -p 3001 # if you want to change this, don't forget to fix it in the frontend, see below
+```
 
-* System dependencies
+### Testing
+```bash
+rspec # being in the backend directory
+```
 
-* Configuration
+## Deploying frontend
+Tools required: [Angular CLI](https://cli.angular.io/)
+```bash
+cd frontend # ../frontend, if you're currently in the backend directory
+ng serve --prod
+```
+**If you've changed rails port (from 3001) or you you're hosting backend not on your local machine**,
+you have to change `host` field at `frontend/src/app/services/mod.service.ts`.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+That's a temporary workaround.
+I'm still looking for on how to pass command line arguments to the Angular app...
