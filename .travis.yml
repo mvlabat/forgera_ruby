@@ -1,0 +1,14 @@
+language: ruby
+
+rvm:
+- 2.3.3
+
+services:
+  - postgresql
+
+before_script:
+  - cd backend
+  - cp config/database.yml.travis config/database.yml
+  - bundle exec rake db:setup
+
+script: bundle exec rspec
