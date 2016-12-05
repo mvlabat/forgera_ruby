@@ -25,7 +25,7 @@ Tools required: [Angular CLI](https://cli.angular.io/)
 cd frontend # ../frontend, if you're currently in the backend directory
 ng serve --prod
 ```
-**If you've changed rails port (from 3001) or you you're hosting backend not on your local machine**,
+**If you've changed rails port (from 3001) or you're hosting backend not on your local machine**,
 you have to change `host` field at `frontend/src/app/services/mod.service.ts`.
 
 That's a temporary workaround.
