@@ -23,6 +23,7 @@ rspec # being in the backend directory
 Tools required: [Angular CLI](https://cli.angular.io/)
 ```bash
 cd frontend # ../frontend, if you're currently in the backend directory
+npm install
 ng serve --prod
 ```
 **If you've changed rails port (from 3001) or you're hosting backend not on your local machine**,
