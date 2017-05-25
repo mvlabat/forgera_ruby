@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/mvlabat/forgera_ruby.svg?branch=master)](https://travis-ci.org/mvlabat/forgera_ruby)
 
 ## Deploying backend
-**Ruby version** the project was developed on: 2.3.3
+**Ruby version** the project was developed on: 2.4.0
 
 **Database:** PostgreSQL<BR>
 **Login:** forgera_ruby<BR>
