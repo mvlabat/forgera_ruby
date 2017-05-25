@@ -12,7 +12,7 @@ $color: #ededed;
 }
 
 #header {
-  background: url(assets/dirt-texture5.png);
+  background: url(/assets/dirt-texture5.png);
   box-shadow: 0 0 15px 5px #000;
 }
 
@@ -60,7 +60,7 @@ form {
 
     padding: 13px 0;
 
-    background: url(assets/button-texture.png);
+    background: url(/assets/button-texture.png);
     border: 2px solid #000;
     @include font;
     color: #e7e7e7;
@@ -71,13 +71,13 @@ form {
 
     &:hover {
       color: #ffffa0;
-      background: url(assets/button-hover-texture.png);
+      background: url(/assets/button-hover-texture.png);
       @include inner-shadow;
     }
 
     &:disabled {
       color: #a1a1a1;
-      background: url(assets/button-disabled-texture.png);
+      background: url(/assets/button-disabled-texture.png);
       box-shadow: none;
     }
   }
@@ -85,7 +85,7 @@ form {
 
 ul.errors {
   padding: 0;
-  background: url(assets/button-disabled-texture.png);
+  background: url(/assets/button-disabled-texture.png);
   border: 2px solid #000;
 }
 
